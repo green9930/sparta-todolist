@@ -2,32 +2,28 @@ import { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const Form = ({ addTodo }) => {
-  const [todoTitle, setTodoTitle] = useState('');
-  const [todoContent, setTodoContent] = useState('');
-
   const nextId = useRef(0);
 
-  const onChangeTitle = (e) => {
-    setTodoTitle(e.target.value);
-  };
+  const [todo, setTodo] = useState({
+    id: (nextId.current += 1),
+    title: '',
+    content: '',
+    isDone: false,
+  });
 
-  const onChangeContent = (e) => {
-    setTodoContent(e.target.value);
+  const onChangeInput = (e) => {
+    console.log(e.target.name);
+    setTodo({ ...todo, [e.target.name]: e.target.value });
   };
 
   const handleSubmitTodo = (e) => {
     e.preventDefault();
 
-    const data = {
-      id: (nextId.current += 1),
-      title: todoTitle,
-      content: todoContent,
-      isDone: false,
-    };
-
-    addTodo(data);
-    setTodoTitle('');
-    setTodoContent('');
+    addTodo(todo);
+    setTodo({
+      title: '',
+      content: '',
+    });
   };
 
   return (
@@ -42,8 +38,8 @@ const Form = ({ addTodo }) => {
               name="title"
               placeholder="제목을 입력해주세요(12자 이하)"
               maxLength={12}
-              value={todoTitle}
-              onChange={onChangeTitle}
+              value={todo.title}
+              onChange={onChangeInput}
             />
           </div>
           <div>
@@ -54,8 +50,8 @@ const Form = ({ addTodo }) => {
               name="content"
               placeholder="내용을 입력해주세요(16자 이하)"
               maxLength={16}
-              value={todoContent}
-              onChange={onChangeContent}
+              value={todo.content}
+              onChange={onChangeInput}
             />
           </div>
         </InputContainer>
