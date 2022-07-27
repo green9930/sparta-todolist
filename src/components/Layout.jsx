@@ -8,7 +8,6 @@ const Layout = () => {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (todo) => {
-    console.log('todo', todo);
     const newTodos = [...todos, todo];
     setTodos(newTodos);
     console.log('ADD TODO');
@@ -29,7 +28,8 @@ const Layout = () => {
     console.log('UPDATE TODO');
   };
 
-  console.log(todos);
+  // console.log(todos);
+
   return (
     <LayoutContainer>
       <Header />

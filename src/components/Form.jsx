@@ -21,7 +21,9 @@ const Form = ({ addTodo }) => {
     e.preventDefault();
     const { title, content } = todo;
 
-    if (title.trim() === '' || content.trim() === '') handleAlert();
+    if (title.trim() === '' && content.trim() === '') handleAlertAll();
+    else if (title.trim() === '') handleAlert('title');
+    else if (content.trim() === '') handleAlert('content');
     else {
       addTodo(todo);
       setAlertMessage('');
@@ -35,7 +37,13 @@ const Form = ({ addTodo }) => {
     });
   };
 
-  const handleAlert = () => {
+  const handleAlert = (name) => {
+    name === 'title'
+      ? setAlertMessage(`제목을 입력해주세요.`)
+      : setAlertMessage(`내용을 입력해주세요.`);
+  };
+
+  const handleAlertAll = () => {
     setAlertMessage(`제목과 내용을 모두 입력해주세요.`);
   };
 
