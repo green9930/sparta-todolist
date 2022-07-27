@@ -3,27 +3,40 @@ import styled from 'styled-components';
 
 const Form = ({ addTodo }) => {
   const nextId = useRef(0);
-
   const [todo, setTodo] = useState({
-    id: (nextId.current += 1),
+    id: nextId.current,
     title: '',
     content: '',
     isDone: false,
   });
 
+  const [alertMessage, setAlertMessage] = useState('');
+
   const onChangeInput = (e) => {
-    console.log(e.target.name);
-    setTodo({ ...todo, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setTodo({ ...todo, [name]: value });
   };
 
   const handleSubmitTodo = (e) => {
     e.preventDefault();
+    const { title, content } = todo;
 
-    addTodo(todo);
+    if (title.trim() === '' || content.trim() === '') handleAlert();
+    else {
+      addTodo(todo);
+      setAlertMessage('');
+    }
+
     setTodo({
+      id: (nextId.current += 1),
       title: '',
       content: '',
+      isDone: false,
     });
+  };
+
+  const handleAlert = () => {
+    setAlertMessage(`제목과 내용을 모두 입력해주세요.`);
   };
 
   return (
@@ -55,6 +68,9 @@ const Form = ({ addTodo }) => {
             />
           </div>
         </InputContainer>
+        <div>
+          <span>{alertMessage}</span>
+        </div>
         <TodoSubmitBtn type="submit">추가하기</TodoSubmitBtn>
       </StyledForm>
     </div>

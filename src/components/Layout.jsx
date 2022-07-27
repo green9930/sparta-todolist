@@ -8,15 +8,16 @@ const Layout = () => {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (todo) => {
+    console.log('todo', todo);
     const newTodos = [...todos, todo];
     setTodos(newTodos);
-    console.log('add', todos);
+    console.log('ADD TODO');
   };
 
   const removeTodo = (id) => {
     const arr = [...todos].filter((todo) => todo.id !== id);
     setTodos(arr);
-    console.log('remove', todos);
+    console.log('REMOVE TODO');
   };
 
   const toggleTodo = (id) => {
@@ -25,9 +26,10 @@ const Layout = () => {
       return todo;
     });
     setTodos(updateTodos);
-    console.log('update', todos);
+    console.log('UPDATE TODO');
   };
 
+  console.log(todos);
   return (
     <LayoutContainer>
       <Header />
