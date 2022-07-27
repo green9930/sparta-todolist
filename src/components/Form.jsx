@@ -21,20 +21,28 @@ const Form = ({ addTodo }) => {
     e.preventDefault();
     const { title, content } = todo;
 
-    if (title.trim() === '' && content.trim() === '') handleAlertAll();
-    else if (title.trim() === '') handleAlert('title');
-    else if (content.trim() === '') handleAlert('content');
-    else {
+    if (title.trim() === '' && content.trim() === '') {
+      handleAlertAll();
+    } else if (title.trim() === '') {
+      handleAlert('title');
+      setTodo({
+        content: content,
+      });
+    } else if (content.trim() === '') {
+      handleAlert('content');
+      setTodo({
+        title: title,
+      });
+    } else {
       addTodo(todo);
       setAlertMessage('');
+      setTodo({
+        id: (nextId.current += 1),
+        title: '',
+        content: '',
+        isDone: false,
+      });
     }
-
-    setTodo({
-      id: (nextId.current += 1),
-      title: '',
-      content: '',
-      isDone: false,
-    });
   };
 
   const handleAlert = (name) => {
