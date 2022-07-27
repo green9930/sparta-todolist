@@ -67,10 +67,10 @@ const Form = ({ addTodo }) => {
               onChange={onChangeInput}
             />
           </div>
+          <StyledAlert>
+            <span>{alertMessage}</span>
+          </StyledAlert>
         </InputContainer>
-        <div>
-          <span>{alertMessage}</span>
-        </div>
         <TodoSubmitBtn type="submit">추가하기</TodoSubmitBtn>
       </StyledForm>
     </div>
@@ -90,6 +90,8 @@ const StyledForm = styled.form`
 
 const InputContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: start;
 `;
 
 const TodoLabel = styled.label`
@@ -108,6 +110,10 @@ const TodoInput = styled.input`
     border: 1px solid #008080;
     outline: none;
   }
+`;
+
+const StyledAlert = styled.div`
+  margin-left: 10px;
 `;
 
 const TodoSubmitBtn = styled.button`
