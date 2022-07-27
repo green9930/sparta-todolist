@@ -26,11 +26,13 @@ const Form = ({ addTodo }) => {
     } else if (title.trim() === '') {
       handleAlert('title');
       setTodo({
+        ...todo,
         content: content,
       });
     } else if (content.trim() === '') {
       handleAlert('content');
       setTodo({
+        ...todo,
         title: title,
       });
     } else {
