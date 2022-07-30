@@ -70,7 +70,7 @@ Layout.js
 </LayoutContainer>
 ```
 
-- Header는 동일하고 TodoListPage는 입력창과 TodoList, TodoDetailPage은 선택한 todo가 필요하므로 `Layout.js` 로 Header 이외의 각자 컴포넌트 props를 전달한다.  
+- Header는 동일하고 `TodoListPage`는 입력창과 TodoList, `TodoDetailPage`은 선택한 todo가 필요하므로 `Layout.js` 로 Header 이외의 각자 컴포넌트 props를 전달한다.  
 
 ### TodoList
 
