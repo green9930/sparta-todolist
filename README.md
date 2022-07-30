@@ -2,29 +2,29 @@
 
 ## 폴더 구조
 
-📦src
- ┣ 📂components
- ┃ ┣ 📂layout
- ┃ ┃ ┗ 📜Layout.jsx
- ┃ ┣ 📜Form.jsx
- ┃ ┣ 📜Header.jsx
- ┃ ┣ 📜Todo.jsx
- ┃ ┣ 📜TodoDetail.jsx
- ┃ ┗ 📜TodoList.jsx
- ┣ 📂pages
- ┃ ┣ 📜TodoDetailPage.jsx
- ┃ ┗ 📜TodoListPage.jsx
- ┣ 📂redux
- ┃ ┣ 📂config
- ┃ ┃ ┗ 📜configStore.js
- ┃ ┗ 📂modules
- ┃ ┃ ┗ 📜todos.js
- ┣ 📂router
- ┃ ┗ 📜todoRouter.jsx
- ┣ 📂styles
- ┃ ┗ 📜GlobalStyle.js
- ┣ 📜App.js
- ┗ 📜index.js
+📦src  
+ ┣ 📂components  
+ ┃ ┣ 📂layout  
+ ┃ ┃ ┗ 📜Layout.jsx  
+ ┃ ┣ 📜Form.jsx  
+ ┃ ┣ 📜Header.jsx  
+ ┃ ┣ 📜Todo.jsx  
+ ┃ ┣ 📜TodoDetail.jsx  
+ ┃ ┗ 📜TodoList.jsx  
+ ┣ 📂pages  
+ ┃ ┣ 📜TodoDetailPage.jsx  
+ ┃ ┗ 📜TodoListPage.jsx  
+ ┣ 📂redux  
+ ┃ ┣ 📂config  
+ ┃ ┃ ┗ 📜configStore.js  
+ ┃ ┗ 📂modules  
+ ┃ ┃ ┗ 📜todos.js  
+ ┣ 📂router  
+ ┃ ┗ 📜todoRouter.jsx  
+ ┣ 📂styles  
+ ┃ ┗ 📜GlobalStyle.js  
+ ┣ 📜App.js  
+ ┗ 📜index.js  
 
 ## react-router 구조
 
