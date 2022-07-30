@@ -1,16 +1,19 @@
 import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createTodoAction } from 'redux/modules/todos';
 import styled from 'styled-components';
 
-const Form = ({ addTodo }) => {
-  const nextId = useRef(0);
+const Form = () => {
+  const nextId = useRef(1);
   const [todo, setTodo] = useState({
     id: nextId.current,
     title: '',
     content: '',
     isDone: false,
   });
-
   const [alertMessage, setAlertMessage] = useState('');
+
+  const dispatch = useDispatch();
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -21,6 +24,7 @@ const Form = ({ addTodo }) => {
     e.preventDefault();
     const { title, content } = todo;
 
+    /* FORM 공백 방지 --------------------------------------------------------------- */
     if (title.trim() === '' && content.trim() === '') {
       handleAlertAll();
     } else if (title.trim() === '') {
@@ -36,7 +40,7 @@ const Form = ({ addTodo }) => {
         title: title,
       });
     } else {
-      addTodo(todo);
+      dispatch(createTodoAction(todo));
       setAlertMessage('');
       setTodo({
         id: (nextId.current += 1),
@@ -61,9 +65,9 @@ const Form = ({ addTodo }) => {
     <div>
       <StyledForm onSubmit={handleSubmitTodo}>
         <InputContainer>
-          <div>
-            <TodoLabel htmlFor="input-title">제목</TodoLabel>
-            <TodoInput
+          <InputWrapper>
+            <label htmlFor="input-title">제목</label>
+            <input
               id="input-title"
               type="text"
               name="title"
@@ -72,19 +76,19 @@ const Form = ({ addTodo }) => {
               value={todo.title}
               onChange={onChangeInput}
             />
-          </div>
-          <div>
-            <TodoLabel htmlFor="input-content">내용</TodoLabel>
-            <TodoInput
+          </InputWrapper>
+          <InputWrapper>
+            <label htmlFor="input-content">내용</label>
+            <input
               id="input-content"
               type="text"
               name="content"
-              placeholder="내용을 입력해주세요(16자 이하)"
-              maxLength={16}
+              placeholder="내용을 입력해주세요(80자 이하)"
+              maxLength={80}
               value={todo.content}
               onChange={onChangeInput}
             />
-          </div>
+          </InputWrapper>
           <StyledAlert>
             <span>{alertMessage}</span>
           </StyledAlert>
@@ -96,14 +100,14 @@ const Form = ({ addTodo }) => {
 };
 
 const StyledForm = styled.form`
-  background-color: #eeeeee;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
-  border-radius: 0 0 10px 10px;
+  background-color: #eeeeee;
   width: 100%;
-  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid transparent;
+  border-radius: 0 0 10px 10px;
 `;
 
 const InputContainer = styled.div`
@@ -112,21 +116,27 @@ const InputContainer = styled.div`
   justify-content: start;
 `;
 
-const TodoLabel = styled.label`
-  font-weight: 600;
-  margin: 0 10px;
-`;
+const InputWrapper = styled.div`
+  label {
+    font-weight: 600;
+    margin: 0 10px;
+  }
 
-const TodoInput = styled.input`
-  padding: 10px 10px 10px;
-  flex-grow: 1;
-  min-width: 200px;
-  border: 1px solid #a8a8a8;
+  input {
+    flex-grow: 1;
+    min-width: 200px;
+    padding: 10px 10px 10px;
+    border: 1px solid #a8a8a8;
 
-  :hover,
-  :focus {
-    border: 1px solid #008080;
-    outline: none;
+    :hover,
+    :focus {
+      border: 1px solid #008080;
+      outline: none;
+    }
+
+    ::placeholder {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -135,9 +145,9 @@ const StyledAlert = styled.div`
 `;
 
 const TodoSubmitBtn = styled.button`
-  padding: 12px 40px;
   background-color: #008080;
   color: #ffffff;
+  padding: 12px 40px;
   border: none;
   border-radius: 10px;
   font-weight: 600;

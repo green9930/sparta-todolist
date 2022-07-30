@@ -1,42 +1,36 @@
 import Todo from 'components/Todo';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-const List = (props) => {
-  const { todos, toggleTodo, removeTodo } = props;
+const TodoList = () => {
+  const todolist = useSelector((state) => state.todos);
+  console.log(todolist);
 
   return (
     <ListContainer>
       <UlContainer>
-        <SytledH2>Working...🔥</SytledH2>
+        <h2>Working...🔥</h2>
         <StyledUl>
-          {todos
+          {todolist
             .filter((val) => !val.isDone)
             .map((todo) => {
               return (
                 <StyledLi key={todo.id}>
-                  <Todo
-                    todo={todo}
-                    toggleTodo={toggleTodo}
-                    removeTodo={removeTodo}
-                  />
+                  <Todo todo={todo} />
                 </StyledLi>
               );
             })}
         </StyledUl>
       </UlContainer>
       <UlContainer>
-        <SytledH2>Done..! 👍</SytledH2>
+        <h2>Done..! 👍</h2>
         <StyledUl>
-          {todos
+          {todolist
             .filter((val) => val.isDone)
             .map((todo) => {
               return (
                 <StyledLi key={todo.id}>
-                  <Todo
-                    todo={todo}
-                    toggleTodo={toggleTodo}
-                    removeTodo={removeTodo}
-                  />
+                  <Todo todo={todo} />
                 </StyledLi>
               );
             })}
@@ -49,15 +43,10 @@ const List = (props) => {
 const ListContainer = styled.div`
   width: 100%;
   padding: 30px;
-  box-sizing: border-box;
 `;
 
 const UlContainer = styled.div`
   min-height: 100px;
-`;
-
-const SytledH2 = styled.h2`
-  margin: 0;
 `;
 
 const StyledUl = styled.ul`
@@ -65,11 +54,10 @@ const StyledUl = styled.ul`
   align-items: center;
   justify-content: start;
   flex-wrap: wrap;
-  list-style: none;
 `;
 
 const StyledLi = styled.li`
   margin: 0 15px 15px 0;
 `;
 
-export default List;
+export default TodoList;

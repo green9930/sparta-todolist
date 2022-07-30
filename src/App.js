@@ -1,7 +1,7 @@
-import TodoList from 'pages/TodoList';
+import TodoRouter from 'router/todoRouter';
 
 function App() {
-  return <TodoList />;
+  return <TodoRouter />;
 }
 
 export default App;

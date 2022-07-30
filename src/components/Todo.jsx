@@ -1,41 +1,76 @@
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { deleteTodoAction, updateTodoAction } from 'redux/modules/todos';
 import styled from 'styled-components';
 
-const Todo = ({ todo, toggleTodo, removeTodo }) => {
+const Todo = ({ todo }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id, title, content, isDone } = todo;
 
   return (
     <StyledTodo>
+      <StyledMoveBtn onClick={() => navigate(`/detail/${id}`)}>
+        상세보기👀
+      </StyledMoveBtn>
       <h3>{title}</h3>
       <StyledContent>{content}</StyledContent>
       <BtnContainer>
-        <StyledTodoBtn color="delete" onClick={() => removeTodo(id)}>
+        <StyledTodoBtn
+          color="delete"
+          onClick={() => dispatch(deleteTodoAction(id))}
+        >
           삭제하기
         </StyledTodoBtn>
-        {isDone ? (
-          <StyledTodoBtn color="cancel" onClick={() => toggleTodo(id)}>
-            취소
-          </StyledTodoBtn>
-        ) : (
-          <StyledTodoBtn color="done" onClick={() => toggleTodo(id)}>
-            완료
-          </StyledTodoBtn>
-        )}
+        <StyledTodoBtn
+          color={isDone ? 'cancel' : 'done'}
+          onClick={() => dispatch(updateTodoAction(id))}
+        >
+          {isDone ? '취소' : '완료'}
+        </StyledTodoBtn>
       </BtnContainer>
     </StyledTodo>
   );
 };
 
 const StyledTodo = styled.div`
+  position: relative;
+  width: 300px;
+  height: 180px;
+  padding: 12px;
   border: 4px solid teal;
   border-radius: 12px;
-  padding: 12px 24px 24px;
-  width: 270px;
-  height: 180px;
+
+  h3 {
+    margin: 10px;
+    width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
+const StyledMoveBtn = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background: #e9be00;
+  color: #ffffff;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
 `;
 
 const StyledContent = styled.span`
   display: inline-block;
-  margin: 20px 0;
+  width: 270px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 25px 10px;
 `;
 
 const BtnContainer = styled.div`
