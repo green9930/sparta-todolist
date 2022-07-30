@@ -1,70 +1,142 @@
-# Getting Started with Create React App
+# TodoList with Redux
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 폴더 구조
 
-## Available Scripts
+📦src
+ ┣ 📂components
+ ┃ ┣ 📂layout
+ ┃ ┃ ┗ 📜Layout.jsx
+ ┃ ┣ 📜Form.jsx
+ ┃ ┣ 📜Header.jsx
+ ┃ ┣ 📜Todo.jsx
+ ┃ ┣ 📜TodoDetail.jsx
+ ┃ ┗ 📜TodoList.jsx
+ ┣ 📂pages
+ ┃ ┣ 📜TodoDetailPage.jsx
+ ┃ ┗ 📜TodoListPage.jsx
+ ┣ 📂redux
+ ┃ ┣ 📂config
+ ┃ ┃ ┗ 📜configStore.js
+ ┃ ┗ 📂modules
+ ┃ ┃ ┗ 📜todos.js
+ ┣ 📂router
+ ┃ ┗ 📜todoRouter.jsx
+ ┣ 📂styles
+ ┃ ┗ 📜GlobalStyle.js
+ ┣ 📜App.js
+ ┗ 📜index.js
 
-In the project directory, you can run:
+## react-router 구조
 
-### `npm start`
+```js
+<Routes>
+  <Route path="/" element={<TodoListPage />} />
+  <Route path="/detail/:id" element={<TodoDetailPage />} />
+</Routes>
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 컴포넌트 구조
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### TodoListPage, TodoDetailPage
 
-### `npm test`
+TodoListPage.js  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```js
+<Layout>
+  <Form />
+  <TodoList />
+</Layout>
+```
 
-### `npm run build`
+TodoDetailPage.js  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+<Layout>
+  <TodoDetailContainer>
+    <TodoDetail todoItem={todoItem} />
+    <StyledMoveBtn onClick={() => navigate('/')}>
+      Go to Todo List
+    </StyledMoveBtn>
+  </TodoDetailContainer>
+</Layout>
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Layout.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+<LayoutContainer>
+  <Header />
+  {props.children}
+</LayoutContainer>
+```
 
-### `npm run eject`
+- Header는 동일하고 TodoListPage는 입력창과 TodoList, TodoDetailPage은 선택한 todo가 필요하므로 `Layout.js` 로 Header 이외의 각자 컴포넌트 props를 전달한다.  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### TodoList
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+TodoList.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```js
+<ListContainer>
+  <UlContainer>
+    <h2>Working...🔥</h2>
+    <StyledUl>
+      {todolist
+        .filter((val) => !val.isDone)
+        .map((todo) => {
+          return (
+            <StyledLi key={todo.id}>
+              <Todo todo={todo} />
+            </StyledLi>
+          );
+        })}
+    </StyledUl>
+  </UlContainer>
+  <UlContainer>
+    <h2>Done..! 👍</h2>
+    <StyledUl>
+      {todolist
+        .filter((val) => val.isDone)
+        .map((todo) => {
+          return (
+            <StyledLi key={todo.id}>
+              <Todo todo={todo} />
+            </StyledLi>
+          );
+        })}
+    </StyledUl>
+  </UlContainer>
+</ListContainer>
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- TodoList의 경우, todolist 배열을 받아서 반복문을 통해 todo 목록을 보여주어야 한다. Working/Done 목록에서 카드 UI를 생성하는 Todo 컴포넌트를 재사용할뿐만 아니라 코드 가독성과 컴포넌트의 명확한 역할 구분을 위해 Todo 컴포넌트를 분리하고 map 함수를 사용한다.
 
-## Learn More
+### TodoDetail
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+TodoDetailPage.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```js
+<Layout>
+  <TodoDetailContainer>
+    <TodoDetail todoItem={todoItem} />
+    <StyledMoveBtn onClick={() => navigate('/')}>
+      Go to Todo List
+    </StyledMoveBtn>
+  </TodoDetailContainer>
+</Layout>
+```
 
-### Code Splitting
+TodoDetail.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```js
+<TodoDetailContainer isDone={isDone}>
+  <div>
+    <span>(Todo No.</span>
+    <span>{id})</span>
+  </div>
+  <h2>{title}</h2>
+  <p>{content}</p>
+</TodoDetailContainer>
+```
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `Go to Todo List` 버튼은 특정 페이지가 아니라 전체 페이지로 돌아가는 기능이므로 TodoDetail 내용에 들어갈 필요가 없고 페이지에 존재하는 것이 페이지와 내부 컴포넌트 사이에 더 명확한 역할 구분일 것이라고 생각해 TodoDetail 컴포넌트가 아닌 페이지 컴포넌트에 삽입했다.
