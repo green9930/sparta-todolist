@@ -1,10 +1,15 @@
 import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createTodoAction } from 'redux/modules/todos';
 import styled from 'styled-components';
 
 const Form = () => {
-  const nextId = useRef(1);
+  const todolist = useSelector((state) => state.todos);
+  console.log(todolist);
+  const lastId = todolist[todolist.length - 1]
+    ? todolist[todolist.length - 1].id + 1
+    : 1;
+  const nextId = useRef(lastId);
   const [todo, setTodo] = useState({
     id: nextId.current,
     title: '',

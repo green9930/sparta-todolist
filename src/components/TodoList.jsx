@@ -23,7 +23,7 @@ const TodoList = () => {
         </StyledUl>
       </UlContainer>
       <UlContainer>
-        <h2>Done..! 👍</h2>
+        <h2>Done..!👍</h2>
         <StyledUl>
           {todolist
             .filter((val) => val.isDone)
