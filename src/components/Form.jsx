@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Form = () => {
   const todolist = useSelector((state) => state.todos);
-  console.log(todolist);
+  // console.log(todolist);
   const lastId = todolist[todolist.length - 1]
     ? todolist[todolist.length - 1].id + 1
     : 1;
