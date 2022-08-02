@@ -1,11 +1,7 @@
 import Todo from 'components/Todo';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-const TodoList = () => {
-  const todolist = useSelector((state) => state.todos);
-  console.log(todolist);
-
+const TodoList = ({ todolist }) => {
   return (
     <ListContainer>
       <UlContainer>

@@ -1,15 +1,18 @@
 import Form from 'components/Form';
 import Layout from 'components/layout/Layout';
 import TodoList from 'components/TodoList';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function TodoListPage() {
-  // const todolist = useSelector((state) => state.todos);
+  // console.log('RENDERING TODOLISTPAGE');
+  const todolist = useSelector((state) => state.todos);
+
+  // console.log(todolist);
 
   return (
     <Layout>
-      <Form />
-      <TodoList />
+      <Form todolist={todolist} />
+      <TodoList todolist={todolist} />
     </Layout>
   );
 }

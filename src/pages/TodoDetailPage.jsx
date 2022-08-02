@@ -5,8 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const TodoDetailPage = () => {
+  // console.log('RENDERING TODODETAILPAGE');
+
   const { id } = useParams();
   const navigate = useNavigate();
+
   const todoItem = useSelector((state) => state.todos).find(
     (todo) => todo.id === parseInt(id)
   );
