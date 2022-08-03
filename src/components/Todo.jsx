@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteTodoAction, updateTodoAction } from 'redux/modules/todos';
+import { todoActions } from 'redux/modules/todosSlice';
 import styled from 'styled-components';
 
 const Todo = ({ todo }) => {
@@ -18,13 +18,13 @@ const Todo = ({ todo }) => {
       <BtnContainer>
         <StyledTodoBtn
           color="delete"
-          onClick={() => dispatch(deleteTodoAction(id))}
+          onClick={() => dispatch(todoActions.deleteTodo(id))}
         >
           삭제하기
         </StyledTodoBtn>
         <StyledTodoBtn
           color={isDone ? 'cancel' : 'done'}
-          onClick={() => dispatch(updateTodoAction(id))}
+          onClick={() => dispatch(todoActions.updateTodo(id))}
         >
           {isDone ? '취소' : '완료'}
         </StyledTodoBtn>

@@ -7,7 +7,7 @@ function TodoListPage() {
   // console.log('RENDERING TODOLISTPAGE');
   const todolist = useSelector((state) => state.todos);
 
-  // console.log(todolist);
+  console.log(todolist);
 
   return (
     <Layout>

@@ -1,10 +1,12 @@
-const { combineReducers, createStore } = require('redux');
-const { default: todosReducer } = require('redux/modules/todos');
+import { configureStore } from '@reduxjs/toolkit';
+import todosSlice from 'redux/modules/todosSlice';
+import alertMessageSlice from 'redux/modules/alertMessageSlice';
 
-const rootReducer = combineReducers({
-  todos: todosReducer,
+const store = configureStore({
+  reducer: {
+    todos: todosSlice.reducer,
+    alerts: alertMessageSlice.reducer,
+  },
 });
-
-const store = createStore(rootReducer);
 
 export default store;

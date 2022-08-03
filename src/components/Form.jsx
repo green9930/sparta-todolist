@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createTodoAction } from 'redux/modules/todos';
+import { useDispatch, useSelector } from 'react-redux';
+import { alertActions } from 'redux/modules/alertMessageSlice';
+import { todoActions } from 'redux/modules/todosSlice';
 import styled from 'styled-components';
+import todoValidator from 'utils/todoValidator';
 
 const Form = ({ todolist }) => {
-  // console.log(todolist);
   /* TODO ID ------------------------------------------------------------------ */
   const lastId = todolist[todolist.length - 1]
     ? todolist[todolist.length - 1].id + 1
@@ -17,7 +18,8 @@ const Form = ({ todolist }) => {
     content: '',
     isDone: false,
   });
-  const [alertMessage, setAlertMessage] = useState('');
+
+  const alertMessage = useSelector((state) => state.alerts);
 
   const dispatch = useDispatch();
 
@@ -31,40 +33,35 @@ const Form = ({ todolist }) => {
     const { title, content } = todo;
 
     /* FORM 공백 방지 --------------------------------------------------------------- */
-    if (title.trim() === '' && content.trim() === '') {
-      handleAlertAll();
-    } else if (title.trim() === '') {
-      handleAlert('title');
-      setTodo({
-        ...todo,
-        content: content,
-      });
-    } else if (content.trim() === '') {
-      handleAlert('content');
-      setTodo({
-        ...todo,
-        title: title,
-      });
-    } else {
-      dispatch(createTodoAction(todo));
-      setAlertMessage('');
-      setTodo({
-        id: (nextId.current += 1),
-        title: '',
-        content: '',
-        isDone: false,
-      });
+    switch (todoValidator({ title, content })) {
+      case 'ALL_ALERT':
+        dispatch(alertActions.createAllAlert());
+        break;
+      case 'TITLE_ALERT':
+        dispatch(alertActions.createTitleAlert());
+        setTodo({
+          ...todo,
+          content: content,
+        });
+        break;
+      case 'CONTENT_ALERT':
+        dispatch(alertActions.createContentAlert());
+        setTodo({
+          ...todo,
+          title: title,
+        });
+        break;
+      default:
+        dispatch(todoActions.createTodo(todo));
+        dispatch(alertActions.deleteAlert());
+        setTodo({
+          id: (nextId.current += 1),
+          title: '',
+          content: '',
+          isDone: false,
+        });
+        break;
     }
-  };
-
-  const handleAlert = (name) => {
-    name === 'title'
-      ? setAlertMessage(`제목을 입력해주세요.`)
-      : setAlertMessage(`내용을 입력해주세요.`);
-  };
-
-  const handleAlertAll = () => {
-    setAlertMessage(`제목과 내용을 모두 입력해주세요.`);
   };
 
   return (
